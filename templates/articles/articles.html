@@ -2,12 +2,12 @@
 {% extends "base.html" %}
 {% block title %}Articles{% endblock title %}
 {% block content %}
-<a href="{%url 'add_article'%}">Create article</a>
+<a class="btn btn-outline-info btn-block" href="{%url 'add_article'%}">Create article</a>
 {% for article in article_list %}
 <div class="card">
 <div class="card-header">
 <span class="font-weight-bold">{{ article.title }}</span> &middot;
-<a href="{%url 'article_detail' article.pk%}">Detail</a>
+<a href="{{article.get_absolute_url }}">Detail</a>
 <span class="text-muted">by {{ article.author }} |
 {{ article.date }}</span>
 </div>
@@ -15,7 +15,8 @@
 {{ article.body }}
 </div>
 <div class="card-footer text-center text-muted">
-<a href="{%url 'update_article' article.pk%}">Edit</a> | <a href="{%url 'delete_article' article.pk%}">Delete</a>
+<a class="btn btn-primary" href="{%url 'update_article' article.pk%}">Edit</a>
+<a class="btn btn-danger" href="{%url 'delete_article' article.pk%}">Delete</a>
 </div>
 </div>
 <br />
