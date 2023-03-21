@@ -1,6 +1,7 @@
-from django.conf import settings
+# from django.conf import settings
 from django.db import models
 from django.urls import reverse
+from project import settings
 
 
 class Article(models.Model):
@@ -16,3 +17,16 @@ class Article(models.Model):
     
     def get_absolute_url(self):
         return reverse("article_detail", kwargs={"pk": self.pk})
+
+
+class Comment(models.Model):
+
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    body = models.CharField(max_length=255)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.body
+    
+    def get_absolute_url(self):
+        return reverse("article_list")

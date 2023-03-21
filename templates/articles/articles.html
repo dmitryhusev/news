@@ -15,8 +15,21 @@
 {{ article.body }}
 </div>
 <div class="card-footer text-center text-muted">
-<a class="btn btn-primary" href="{%url 'update_article' article.pk%}">Edit</a>
-<a class="btn btn-danger" href="{%url 'delete_article' article.pk%}">Delete</a>
+        {%if article.author == user%}
+            <a class="btn btn-primary" href="{%url 'update_article' article.pk%}">Edit</a>
+            <a class="btn btn-danger" href="{%url 'delete_article' article.pk%}">Delete</a>
+        {%else%}
+            Oops, not your article
+        {%endif%}
+        {% for comment in article.comment_set.all %}
+            <div class="float-end">
+                <span class="font-weight-bold">
+                {{ comment.author }} &middot;
+                </span>
+                {{ comment }}
+            </div><br>
+        {% endfor %}
+        
 </div>
 </div>
 <br />
