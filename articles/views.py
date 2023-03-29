@@ -8,6 +8,15 @@ from django.views.generic.detail import SingleObjectMixin
 from django.urls import reverse_lazy, reverse 
 
 
+class ArticleDetails(LoginRequiredMixin, View):
+    def get(self, request, *args, **kwargs):
+        view = CommentGet.as_view()
+        return view(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        view = CommentPost.as_view()
+        return view(request, *args, **kwargs)
+
 class CommentGet(DetailView):
     model = Article
     template_name = "articles/article_detail.html"
@@ -35,15 +44,6 @@ class CommentPost(SingleObjectMixin, FormView):
     def get_success_url(self):
         article = self.get_object()
         return reverse("article_detail", kwargs={"pk": article.pk})
-
-class ArticleDetails(LoginRequiredMixin, View):
-    def get(self, request, *args, **kwargs):
-        view = CommentGet.as_view()
-        return view(request, *args, **kwargs)
-    
-    def post(self, request, *args, **kwargs):
-        view = CommentPost.as_view()
-        return view(request, *args, **kwargs)
 
 #################################################
 
